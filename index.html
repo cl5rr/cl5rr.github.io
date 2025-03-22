@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURNED - Developer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div id="enemy"></div>
+    
+    <audio id="bgMusic" loop>
+        <source src="bee.mp3" type="audio/mpeg">
+    </audio>
+    
+    <nav class="nav-menu">
+        <ul>
+            <li><a href="#" data-section="home">home</a></li>
+            <li><a href="#" data-section="general">general</a></li>
+            <li><a href="#" data-section="personal">personal</a></li>
+            <li><a href="#" data-section="about">about me</a></li>
+            <li><a href="#" data-section="socials">socials</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <section id="home" class="active">
+            <div class="content-wrapper">
+                <div class="header card" data-dialogue="yo. welcome to my chaos.">
+                    <h1 class="title">BURNED</h1>
+                    <p class="subtitle">roblox dev & music chaos creator</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="general">
+            <div class="content-wrapper">
+                <div class="card">
+                    <h2 data-dialogue="oh, you wanna know stuff? cool.">general?</h2>
+                    <p data-dialogue="yeah, that's me.">so uh... i'm <span class="highlight">burned</span>, some guy who somehow became a roblox dev. (don't ask how, i don't know either).</p>
+                    <p data-dialogue="collabs? nah, not my thing.">i don't collab with randoms. only if i vibe with you and trust you. otherwise, nah.</p>
+                    <p data-dialogue="music is my side hustle.">i also make music for fun. mostly OSTs, because why not?</p>
+                    <p data-dialogue="check out my game, it's kinda cool.">i made burned's difficulty button simulator. it's a thing. you can play it here.</p>
+                    <a href="https://www.roblox.com/games/18859557099/The-End-Burneds-Difficulty-Button-Simulator-V3" class="button" target="_blank" data-dialogue="thanks for playing, i guess.">play my game</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="personal">
+            <div class="content-wrapper">
+                <div class="card">
+                    <h2 data-dialogue="let's get personal, but not too personal.">personal</h2>
+                    <p data-dialogue="i'm kinda unhinged, ngl.">i'm a little chaotic. like, a lot. but it's fine.</p>
+                    <p data-dialogue="memes are my lifeblood.">i reference memes way too much. it's a problem. but i don't care.</p>
+                    <p data-dialogue="my birthday is a thing.">oh yeah, my birthday is july 25. mark it. or don't. idc.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="about">
+            <div class="content-wrapper">
+                <div class="card">
+                    <h2 data-dialogue="here's the 'about me' section. yay.">about me</h2>
+                    <p data-dialogue="i don't talk much. like, ever.">i'm usually quiet. unless i'm ranting about something. then good luck shutting me up.</p>
+                    <p data-dialogue="pronouns? sure.">i'm a dude. pronouns are he/him. or vroom/stanley if you're feeling weird.</p>
+                    <p data-dialogue="no shipping, pls."><span class="warning">i'm not into shipping or romance. don't even try. i'll block you.</span></p>
+                    <p data-dialogue="hungary. not hungry.">i'm hungarian. no, it's not italy. no, it's not "hungry." stop.</p>
+                    <img src="hungarian-flag.png" alt="hungarian flag" class="hungarian-flag" id="hungaryFlag" data-dialogue="you clicked it. why?">
+                    <p data-dialogue="seriously, stop.">don't click the flag. or do. i don't care. but don't.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="socials">
+            <div class="content-wrapper">
+                <div class="card">
+                    <h2 data-dialogue="socials. because why not.">socials</h2>
+                    <p data-dialogue="here they are. do with them what you will.">socials. ugh. here you go.</p>
+                    
+                    <div class="socials two-by-two">
+                        <a href="https://www.roblox.com/users/1753358221/profile" class="social-link" target="_blank" data-dialogue="roblox profile. go nuts.">
+                            <span class="social-icon">👤</span> roblox profile
+                        </a>
+                        <a href="https://www.roblox.com/groups/17358272/Slamo#!/about" class="social-link" target="_blank" data-dialogue="roblox group. join if you want.">
+                            <span class="social-icon">👥</span> roblox group
+                        </a>
+                        <a href="https://discordapp.com/users/778621308912926741" class="social-link" target="_blank" data-dialogue="discord. add me. or don't.">
+                            <span class="social-icon">💬</span> discord profile
+                        </a>
+                        <a href="https://discord.gg/p2K76UtvUs" class="social-link" target="_blank" data-dialogue="discord server. come hang out.">
+                            <span class="social-icon">🌐</span> discord server
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <div id="dialogue-box"></div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
