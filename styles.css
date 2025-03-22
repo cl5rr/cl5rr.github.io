@@ -14,59 +14,152 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    overflow: hidden; /* Added overflow: hidden; */
 }
 
 a, button, [data-dialogue], .social-link {
     cursor: pointer !important;
 }
 
-@keyframes gradientAnimation {
+@keyframes enhancedGradientAnimation {
     0% {
         background-position: 0% 50%;
+        background-size: 300% 300%;
+    }
+    25% {
+        background-size: 350% 350%;
     }
     50% {
         background-position: 100% 50%;
+        background-size: 400% 400%;
+    }
+    75% {
+        background-size: 350% 350%;
     }
     100% {
         background-position: 0% 50%;
+        background-size: 300% 300%;
     }
 }
 
 @keyframes pulseText {
     0% {
-        text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+        text-shadow: 0 0 5px rgba(255, 107, 107, 0.5), 0 0 10px rgba(255, 107, 107, 0.2);
         transform: scale(1);
+        letter-spacing: 1px;
     }
     50% {
-        text-shadow: 0 0 20px rgba(255, 107, 107, 0.8);
+        text-shadow: 0 0 20px rgba(255, 107, 107, 0.8), 0 0 30px rgba(255, 107, 107, 0.4);
         transform: scale(1.05);
+        letter-spacing: 2px;
     }
     100% {
-        text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+        text-shadow: 0 0 5px rgba(255, 107, 107, 0.5), 0 0 10px rgba(255, 107, 107, 0.2);
         transform: scale(1);
+        letter-spacing: 1px;
     }
 }
 
 @keyframes floatAnimation {
     0% {
-        transform: translateY(0);
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(1deg);
     }
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-5px) rotate(-1deg);
+    }
+    75% {
+        transform: translateY(-12px) rotate(0.5deg);
     }
     100% {
-        transform: translateY(0);
+        transform: translateY(0) rotate(0deg);
     }
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes enhancedFadeIn {
+    0% { 
+        opacity: 0; 
+        transform: translateY(20px) scale(0.95);
+        filter: blur(10px);
+    }
+    50% {
+        filter: blur(5px);
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
 }
 
-@keyframes fadeOut {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-20px); }
+@keyframes enhancedFadeOut {
+    0% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+    50% {
+        filter: blur(5px);
+    }
+    100% { 
+        opacity: 0; 
+        transform: translateY(-20px) scale(0.95);
+        filter: blur(10px);
+    }
+}
+
+@keyframes dialoguePopIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px) scale(0.8);
+    }
+    30% {
+        transform: translateX(-50%) translateY(-5px) scale(1.1);
+    }
+    60% {
+        transform: translateX(-50%) translateY(3px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+}
+
+@keyframes dialoguePopOut {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px) scale(0.9);
+    }
+}
+
+@keyframes navGlow {
+    0% {
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 2px 25px rgba(255, 107, 107, 0.2), 0 2px 30px rgba(138, 43, 226, 0.15);
+    }
+    100% {
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    }
+}
+
+@keyframes subtitleGlow {
+    0% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+    50% {
+        text-shadow: 0 0 15px rgba(255, 153, 51, 0.5), 0 0 20px rgba(138, 43, 226, 0.4);
+    }
+    100% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
 }
 
 html, body {
@@ -77,10 +170,11 @@ html, body {
 body {
     background: linear-gradient(45deg, var(--gradient-top), var(--gradient-middle), var(--gradient-bottom));
     background-size: 400% 400%;
-    animation: gradientAnimation 15s ease infinite;
+    animation: enhancedGradientAnimation 15s ease infinite;
     color: var(--text);
     font-family: 'Segoe UI Variable Text', 'Segoe UI', Arial, sans-serif;
     font-weight: 300;
+    overflow: hidden;
     position: relative;
 }
 
@@ -105,12 +199,15 @@ body {
     padding: 1rem 0;
     z-index: 1000;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    animation: navGlow 8s infinite;
+    overflow: hidden;
 }
 
 .nav-menu ul {
     list-style: none;
     display: flex;
     gap: 2rem;
+    overflow: hidden;
 }
 
 .nav-menu a {
@@ -120,8 +217,9 @@ body {
     font-size: 1.1rem;
     padding: 0.5rem 1rem;
     border-radius: 50px;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
+    overflow: hidden;
 }
 
 .nav-menu a::after {
@@ -132,17 +230,23 @@ body {
     width: 0;
     height: 2px;
     background: var(--accent);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transform: translateX(-50%);
+    overflow: hidden;
 }
 
 .nav-menu a:hover::after {
-    width: 80%;
+    width: 100%;
+    height: 3px;
+    box-shadow: 0 0 10px var(--accent);
+    overflow: hidden;
 }
 
 .nav-menu a:hover {
     color: var(--accent);
-    transform: translateY(-3px);
+    transform: translateY(-5px) scale(1.1);
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+    overflow: hidden;
 }
 
 section {
@@ -158,17 +262,20 @@ section {
     pointer-events: none;
     transition: opacity 0.5s ease;
     padding: 0 2rem;
+    overflow: hidden;
 }
 
 section.active {
     opacity: 1;
     pointer-events: all;
     z-index: 1;
-    animation: fadeIn 0.8s forwards;
+    animation: enhancedFadeIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    overflow: hidden;
 }
 
 section.inactive {
-    animation: fadeOut 0.8s forwards;
+    animation: enhancedFadeOut 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    overflow: hidden;
 }
 
 .content-wrapper {
@@ -177,43 +284,64 @@ section.inactive {
     margin: 0 auto;
     text-align: center;
     max-height: 90vh;
-    overflow-y: auto;
+    overflow: hidden;
     scrollbar-width: thin;
     scrollbar-color: var(--accent) rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
 .content-wrapper::-webkit-scrollbar {
     width: 8px;
+    overflow: hidden;
 }
 
 .content-wrapper::-webkit-scrollbar-track {
     background: rgba(0,0,0,0.1);
     border-radius: 10px;
+    overflow: hidden;
 }
 
 .content-wrapper::-webkit-scrollbar-thumb {
     background-color: var(--accent);
     border-radius: 10px;
+    border: 2px solid rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.content-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: var(--gradient-middle);
+    overflow: hidden;
 }
 
 .card {
     background: var(--card-bg);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     border-radius: 16px;
     padding: 3rem;
     margin-bottom: 2rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(138, 43, 226, 0.1);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                border-color 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    will-change: transform, box-shadow, border-color;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 94, 98, 0.2);
+    background: linear-gradient(135deg, 
+                rgba(25, 25, 35, 0.7), 
+                rgba(30, 30, 45, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    overflow: hidden;
 }
 
 .header {
     margin-bottom: 3rem;
-    animation: floatAnimation 6s ease-in-out infinite;
+    animation: floatAnimation 8s ease-in-out infinite;
+    overflow: hidden;
 }
 
 .title {
@@ -224,19 +352,43 @@ section.inactive {
     margin-bottom: 1rem;
     position: relative;
     display: inline-block;
-    background: linear-gradient(45deg, var(--gradient-top), var(--accent));
+    background: linear-gradient(45deg, var(--gradient-top), var(--accent), var(--gradient-bottom));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: gradientAnimation 8s ease infinite;
+    animation: enhancedGradientAnimation 8s ease infinite;
     background-size: 200% 200%;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    filter: drop-shadow(0 5px 15px rgba(255, 107, 107, 0.3));
+    overflow: hidden;
+    will-change: background-position;
+}
+
+.title::after {
+    content: 'BURNED';
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    background: linear-gradient(45deg, var(--gradient-bottom), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0.3;
+    filter: blur(10px);
+    animation: enhancedGradientAnimation 8s ease infinite reverse;
+    overflow: hidden;
+    will-change: background-position;
 }
 
 .subtitle {
     font-family: 'OCR A Extended', 'Courier New', monospace;
     font-size: 1.2rem;
     letter-spacing: 1px;
-    opacity: 0.8;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    animation: subtitleGlow 4s infinite;
+    overflow: hidden;
 }
 
 h2 {
@@ -246,6 +398,8 @@ h2 {
     position: relative;
     display: inline-block;
     letter-spacing: 1px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
 }
 
 h2::after {
@@ -257,22 +411,36 @@ h2::after {
     height: 3px;
     background: var(--accent);
     transform: translateX(-50%);
-    transition: width 0.3s ease;
+    transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.4s ease,
+                height 0.4s ease;
+    border-radius: 3px;
 }
 
 .card:hover h2::after {
-    width: 100px;
+    width: 120px;
+    height: 4px;
+    box-shadow: 0 0 15px var(--accent);
+}
+
+.card:hover h2 {
+    transform: scale(1.05);
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
 }
 
 p {
     margin-bottom: 1.5rem;
     font-size: 1.1rem;
     line-height: 1.6;
-    transition: transform 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
 }
 
 .card p:hover {
-    transform: translateX(5px);
+    transform: translateX(8px) scale(1.03);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
 }
 
 .highlight {
@@ -281,6 +449,27 @@ p {
     display: inline-block;
     animation: pulseText 2s infinite;
     position: relative;
+    padding: 0 5px;
+    overflow: hidden;
+}
+
+.highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background-color: rgba(255, 107, 107, 0.2);
+    z-index: -1;
+    transform: skew(-5deg) rotate(-1deg);
+    transition: all 0.3s ease;
+}
+
+.highlight:hover::after {
+    height: 50%;
+    background-color: rgba(255, 107, 107, 0.3);
+    transform: skew(-8deg) rotate(-2deg);
 }
 
 .warning {
@@ -289,6 +478,21 @@ p {
     display: inline-block;
     animation: pulseText 2s infinite;
     position: relative;
+    padding: 0 5px;
+    overflow: hidden;
+}
+
+.warning::before {
+    content: '⚠️';
+    position: absolute;
+    left: -25px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.warning:hover::before {
+    opacity: 1;
+    left: -20px;
 }
 
 .hungarian-flag {
@@ -297,15 +501,18 @@ p {
     border-radius: 12px;
     margin: 15px auto;
     display: block;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer !important;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     object-fit: cover;
+    border: 3px solid transparent;
+    overflow: hidden;
 }
 
 .hungarian-flag:hover {
-    transform: scale(1.05) rotate(2deg);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1) rotate(3deg);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 107, 107, 0.3);
+    border: 3px solid var(--accent);
 }
 
 .button {
@@ -319,8 +526,11 @@ p {
     margin: 1.5rem 0;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: bold;
+    letter-spacing: 1px;
+    z-index: 1;
 }
 
 .button::before {
@@ -330,18 +540,48 @@ p {
     left: 0;
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
     transition: all 0.5s ease;
+    z-index: -1;
+}
+
+.button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 153, 51, 0.2), 
+                rgba(138, 43, 226, 0.2), 
+                transparent);
+    transition: all 0.8s ease;
+    z-index: -1;
 }
 
 .button:hover {
     background-color: rgba(255, 255, 255, 0.25);
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px) scale(1.08);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 107, 107, 0.3);
+    letter-spacing: 2px;
+    border-color: rgba(255, 107, 107, 0.3);
 }
 
 .button:hover::before {
     width: 100%;
+}
+
+.button:hover::after {
+    left: 100%;
+}
+
+.button:active {
+    transform: translateY(-2px) scale(0.98);
 }
 
 .socials {
@@ -350,6 +590,7 @@ p {
     flex-wrap: wrap;
     gap: 1.2rem;
     margin-top: 2rem;
+    overflow: hidden;
 }
 
 .socials.two-by-two {
@@ -366,30 +607,53 @@ p {
 .social-link {
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: rgba(255, 255, 255, 0.1);
     color: var(--text);
     padding: 0.7rem 1.5rem;
     border-radius: 50px;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.15), 
+                transparent);
+    transition: all 0.5s ease;
 }
 
 .social-link:hover {
     background-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px) scale(1.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(138, 43, 226, 0.2);
+    border-color: rgba(255, 107, 107, 0.2);
+}
+
+.social-link:hover::before {
+    left: 100%;
 }
 
 .social-icon {
     margin-right: 0.7rem;
-    font-size: 1.1rem;
-    transition: transform 0.3s ease;
+    font-size: 1.3rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-block;
 }
 
 .social-link:hover .social-icon {
-    transform: scale(1.2);
+    transform: scale(1.3) rotate(15deg);
 }
 
 #particles-js {
@@ -399,6 +663,7 @@ p {
     width: 100%;
     height: 100%;
     z-index: -1;
+    overflow: hidden;
 }
 
 #dialogue-box {
@@ -409,15 +674,41 @@ p {
     background-color: var(--card-bg);
     padding: 15px 25px;
     border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 107, 107, 0.2);
     max-width: 80%;
     font-size: 1.1rem;
     z-index: 2000;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
     border: 1px solid var(--accent);
     backdrop-filter: blur(10px);
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    overflow: hidden;
+}
+
+#dialogue-box.show {
+    animation-name: dialoguePopIn;
+}
+
+#dialogue-box.hide {
+    animation-name: dialoguePopOut;
+}
+
+.notification {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--card-bg);
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 107, 107, 0.2);
+    max-width: 80%;
+    font-size: 1.1rem;
+    z-index: 2000;
+    border: 1px solid var(--accent);
+    backdrop-filter: blur(10px);
+    animation: dialoguePopIn 0.5s forwards;
+    overflow: hidden;
 }
 
 @media (max-width: 768px) {
