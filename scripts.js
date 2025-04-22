@@ -97,11 +97,11 @@ document.addEventListener('DOMContentLoaded', function() {
         particlesJS("particles-js", {
             "particles": {
                 "number": { 
-                    "value": 60, // fewer particles
+                    "value": 60,
                     "density": { "enable": true, "value_area": 1000 } 
                 },
                 "color": { 
-                    "value": ["#222222", "#444444", "#666666", "#888888"] // Dark/black colors
+                    "value": ["#222222", "#444444", "#666666", "#888888"]
                 },
                 "shape": { 
                     "type": ["circle"],
@@ -109,17 +109,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     "polygon": { "nb_sides": 5 }
                 },
                 "opacity": { 
-                    "value": 0.3, // More transparent
+                    "value": 0.3,
                     "random": true, 
                     "anim": { 
                         "enable": true, 
-                        "speed": 0.8, // Slower
+                        "speed": 0.8,
                         "opacity_min": 0.1, 
                         "sync": false 
                     } 
                 },
                 "size": { 
-                    "value": 3, // Smaller particles
+                    "value": 3,
                     "random": true, 
                     "anim": { 
                         "enable": true, 
@@ -131,13 +131,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 "line_linked": { 
                     "enable": true, 
                     "distance": 200, 
-                    "color": "#333333", // Dark lines
+                    "color": "#333333",
                     "opacity": 0.2,
                     "width": 0.8
                 },
                 "move": { 
                     "enable": true, 
-                    "speed": 1, // Slower movement
+                    "speed": 1,
                     "direction": "none", 
                     "random": true, 
                     "straight": false, 
@@ -528,7 +528,7 @@ document.addEventListener('DOMContentLoaded', function() {
         burstContainer.style.zIndex = '9999';
         document.body.appendChild(burstContainer);
         
-        const numParticles = Math.floor(Math.random() * 10) + 5; // Fewer particles for subtlety
+        const numParticles = Math.floor(Math.random() * 10) + 5;
         
         for (let i = 0; i < numParticles; i++) {
             createLiminalParticle(burstContainer);
@@ -546,21 +546,21 @@ document.addEventListener('DOMContentLoaded', function() {
     function createLiminalParticle(container) {
         const particle = document.createElement('div');
         
-        const size = Math.random() * 8 + 2; // Smaller particles
+        const size = Math.random() * 8 + 2;
         const duration = Math.random() * 800 + 400;
-        const distance = Math.random() * 60 + 20; // Shorter distance
+        const distance = Math.random() * 60 + 20;
         const angle = Math.random() * Math.PI * 2;
         const delay = Math.random() * 100;
         
-        const brightness = Math.floor(Math.random() * 30); // Very dark
+        const brightness = Math.floor(Math.random() * 30);
         const color = `rgba(${brightness}, ${brightness}, ${brightness}, 0.7)`;
         
         particle.style.position = 'absolute';
         particle.style.width = `${size}px`;
         particle.style.height = `${size}px`;
         particle.style.backgroundColor = color;
-        particle.style.borderRadius = '50%'; // All circular
-        particle.style.boxShadow = `0 0 ${Math.random() * 4 + 1}px rgba(0, 0, 0, 0.5)`; // Subtle shadow
+        particle.style.borderRadius = '50%';
+        particle.style.boxShadow = `0 0 ${Math.random() * 4 + 1}px rgba(0, 0, 0, 0.5)`;
         particle.style.transform = 'translate(-50%, -50%) scale(0)';
         particle.style.opacity = '0';
         
@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function() {
             particle.style.transform = `translate(
                 ${Math.cos(angle) * distance}px, 
                 ${Math.sin(angle) * distance}px
-            ) scale(${Math.random() * 0.4 + 0.2})`; // Smaller scale
+            ) scale(${Math.random() * 0.4 + 0.2})`;
             particle.style.opacity = '0.7';
             
             setTimeout(() => {
@@ -588,7 +588,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ripple.style.width = '8px';
         ripple.style.height = '8px';
         ripple.style.borderRadius = '50%';
-        ripple.style.border = '2px solid rgba(0, 0, 0, 0.4)'; // Black border
+        ripple.style.border = '2px solid rgba(0, 0, 0, 0.4)';
         ripple.style.transform = 'translate(-50%, -50%)';
         ripple.style.pointerEvents = 'none';
         ripple.style.zIndex = '9999';
