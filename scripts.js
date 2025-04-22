@@ -1,6 +1,35 @@
 document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('contextmenu', (e) => e.preventDefault());
 
+    document.body.style.background = 'linear-gradient(135deg, #ffffff, #f4f4f4, #eaeaea, #ffffff)';
+    document.body.style.backgroundSize = '400% 400%';
+    document.body.style.animation = 'subtleLiminalPulse 20s ease infinite';
+    
+    if (!document.querySelector('style#liminal-style')) {
+        const style = document.createElement('style');
+        style.id = 'liminal-style';
+        style.textContent = `
+            @keyframes subtleLiminalPulse {
+                0% { background-position: 0% 50% }
+                50% { background-position: 100% 50% }
+                100% { background-position: 0% 50% }
+            }
+            
+            .notification {
+                background-color: rgba(245, 245, 245, 0.9) !important;
+                color: #333 !important;
+                border: 1px solid #ddd !important;
+            }
+            
+            @keyframes softFloat {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-8px); }
+                100% { transform: translateY(0px); }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
     const notificationQueue = [];
     let activeNotification = null;
 
@@ -16,28 +45,28 @@ document.addEventListener('DOMContentLoaded', function() {
             processNotificationQueue();
         }
     }
-
+    
     function processNotificationQueue() {
         if (notificationQueue.length === 0) {
             activeNotification = null;
             return;
         }
-
+    
         const notification = notificationQueue.shift();
         activeNotification = notification;
-
+    
         const existingNotification = document.querySelector('.notification');
         if (existingNotification) {
             existingNotification.remove();
         }
-
+    
         const notificationElement = document.createElement('div');
         notificationElement.className = 'notification';
         notificationElement.textContent = notification.message;
         document.body.appendChild(notificationElement);
-
+    
         setTimeout(() => {
-            notificationElement.style.animationName = 'dialoguePopOut';
+            notificationElement.style.animationName = 'dialogueDismiss';
             
             setTimeout(() => {
                 notificationElement.remove();
@@ -45,19 +74,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 500);
         }, notification.duration);
     }
-
+    
     document.addEventListener('keydown', (e) => {
         if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) {
-            showNotification('dude... github exists.');
+            showNotification('source is available when you need it.');
             e.preventDefault();
         }
     });
-
+    
     let isTabbing = false;
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Tab' && !isTabbing) {
             isTabbing = true;
-            showNotification('tip: use arrow keys (← → or ↑ ↓) to navigate. see how much i care about people?');
+            showNotification('navigate with arrow keys (← → or ↑ ↓) for a smoother experience.');
             setTimeout(() => {
                 isTabbing = false;
             }, 5000);
@@ -67,48 +96,53 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof particlesJS !== 'undefined') {
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": ["#ff9933", "#ff5e62", "#8a2be2", "#ffffff"] },
+                "number": { 
+                    "value": 60, // fewer particles
+                    "density": { "enable": true, "value_area": 1000 } 
+                },
+                "color": { 
+                    "value": ["#222222", "#444444", "#666666", "#888888"] // Dark/black colors
+                },
                 "shape": { 
-                    "type": ["circle", "triangle", "polygon"],
-                    "stroke": { "width": 0, "color": "#000000" }, 
+                    "type": ["circle"],
+                    "stroke": { "width": 0, "color": "#000000" },
                     "polygon": { "nb_sides": 5 }
                 },
                 "opacity": { 
-                    "value": 0.6, 
+                    "value": 0.3, // More transparent
                     "random": true, 
                     "anim": { 
                         "enable": true, 
-                        "speed": 1, 
+                        "speed": 0.8, // Slower
                         "opacity_min": 0.1, 
                         "sync": false 
                     } 
                 },
                 "size": { 
-                    "value": 4, 
+                    "value": 3, // Smaller particles
                     "random": true, 
                     "anim": { 
                         "enable": true, 
-                        "speed": 6, 
-                        "size_min": 0.5, 
+                        "speed": 2,
+                        "size_min": 0.1, 
                         "sync": false 
                     } 
                 },
                 "line_linked": { 
                     "enable": true, 
-                    "distance": 150, 
-                    "color": "#ffffff", 
-                    "opacity": 0.4, 
-                    "width": 1.2 
+                    "distance": 200, 
+                    "color": "#333333", // Dark lines
+                    "opacity": 0.2,
+                    "width": 0.8
                 },
                 "move": { 
                     "enable": true, 
-                    "speed": 4, 
+                    "speed": 1, // Slower movement
                     "direction": "none", 
                     "random": true, 
                     "straight": false, 
-                    "out_mode": "bounce", 
-                    "bounce": true, 
+                    "out_mode": "out",
+                    "bounce": false, 
                     "attract": { 
                         "enable": true, 
                         "rotateX": 600, 
@@ -132,13 +166,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 "modes": { 
                     "grab": { 
                         "distance": 400, 
-                        "line_linked": { "opacity": 1 } 
+                        "line_linked": { "opacity": 0.4 }
                     }, 
                     "bubble": { 
-                        "distance": 150, 
-                        "size": 12, 
+                        "distance": 200, 
+                        "size": 5,
                         "duration": 2, 
-                        "opacity": 0.8, 
+                        "opacity": 0.3,
                         "speed": 3 
                     }, 
                     "repulse": { 
@@ -146,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         "duration": 0.4 
                     }, 
                     "push": { 
-                        "particles_nb": 5 
+                        "particles_nb": 4
                     }, 
                     "remove": { 
                         "particles_nb": 2 
@@ -160,8 +194,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const hungaryFlag = document.getElementById('hungaryFlag');
     if (hungaryFlag) {
         hungaryFlag.addEventListener('click', function() {
-            this.style.animation = 'floatAnimation 0.5s ease-in-out 3';
-            showNotification('Ah, I see you\'re a person of culture as well...');
+            this.style.animation = 'softFloat 0.5s ease-in-out 3';
+            showNotification('A brief moment of cultural appreciation...');
             
             setTimeout(() => {
                 window.open('https://youtu.be/vsFdsmnXXew', '_blank');
@@ -172,26 +206,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const bgMusic = document.getElementById('bgMusic');
     let musicStarted = false;
-
+    
     document.addEventListener('click', function() {
         if (!musicStarted && bgMusic) {
-            bgMusic.volume = 0.4;
+            bgMusic.volume = 0.3;
             bgMusic.play().then(() => {
-                let currentVolume = 0.4;
+                let currentVolume = 0.3;
                 const fadeIn = setInterval(() => {
                     currentVolume += 0.1;
-                    if (currentVolume >= 0.8) {
+                    if (currentVolume >= 0.6) {
                         clearInterval(fadeIn);
-                        currentVolume = 0.8;
+                        currentVolume = 0.6;
                     }
                     bgMusic.volume = currentVolume;
                 }, 1000);
                 
-                showNotification('Music enabled. Hope you like bees.');
+                showNotification('entering liminal space');
                 musicStarted = true;
             }).catch(e => {
                 console.log('Audio playback error:', e);
-                showNotification('Music couldn\'t be played. Click again to try.');
+                showNotification('Tap again to enable sound');
             });
         }
     }, { once: true });
@@ -203,51 +237,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const switchSection = (targetId) => {
         if (isAnimating) return;
-
+    
         const targetSection = document.getElementById(targetId);
         if (!targetSection || targetSection === currentSection) return;
-
+    
         isAnimating = true;
-
-        const direction = getTransitionDirection(currentSection, targetSection);
-        
-        currentSection.style.animation = `enhancedFadeOut 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards`;
-        currentSection.style.transform = `translateY(${direction * 50}px) scale(0.95)`;
+    
+        currentSection.style.animation = `gentleFadeOut 0.8s ease forwards`;
+        currentSection.style.transform = `translateY(20px)`;
         currentSection.style.opacity = '0';
-
+    
         const navMenu = document.querySelector('.nav-menu');
         navMenu.style.animation = 'none';
         setTimeout(() => {
-            navMenu.style.animation = 'navGlow 0.8s ease-in-out';
+            navMenu.style.animation = 'softGlow 3s ease-in-out';
         }, 10);
-
+    
         setTimeout(() => {
             currentSection.classList.remove('active');
             currentSection.style.animation = '';
             currentSection.style.transform = '';
             currentSection.style.opacity = '';
-
+    
             targetSection.classList.add('active');
-            targetSection.style.animation = `enhancedFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards`;
+            targetSection.style.animation = `gentleFadeIn 0.8s ease forwards`;
             
             const cards = targetSection.querySelectorAll('.card');
             cards.forEach((card, index) => {
-                card.style.transform = 'translateY(40px) scale(0.95)';
+                card.style.transform = 'translateY(20px)';
                 card.style.opacity = '0';
                 
                 setTimeout(() => {
-                    card.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                    card.style.transform = 'translateY(0) scale(1)';
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.transform = 'translateY(0)';
                     card.style.opacity = '1';
                     
                     setTimeout(() => {
                         card.style.transition = '';
-                    }, 800);
-                }, 100 + index * 150);
+                    }, 600);
+                }, 100 + index * 120);
             });
-
+    
             currentSection = targetSection;
-
+    
             setTimeout(() => {
                 isAnimating = false;
             }, 800);
@@ -320,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function() {
         element.addEventListener('click', function() {
             if (this.classList.contains('card') || this.tagName === 'H2' || this.tagName === 'P') {
                 this.style.transform = 'scale(1.05) translateY(-10px) rotate(1deg)';
-                this.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 94, 98, 0.4)';
+                this.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 0, 0, 0.2)';
                 
                 setTimeout(() => {
                     this.style.transform = '';
@@ -420,33 +452,32 @@ document.addEventListener('DOMContentLoaded', function() {
     if (subtitleElement) {
         const originalText = subtitleElement.textContent;
         subtitleElement.textContent = '';
-
+    
         let i = 0;
         const typeEffect = () => {
             if (i < originalText.length) {
                 subtitleElement.textContent += originalText.charAt(i);
                 
-                const randomDelay = Math.floor(Math.random() * 50) + 50;
-                
+                const randomDelay = Math.floor(Math.random() * 40) + 60;
                 const char = originalText.charAt(i);
-                const extraDelay = (char === '.' || char === ',' || char === '&') ? 200 : 0;
+                const extraDelay = (char === '.' || char === ',' || char === '&') ? 300 : 0;
                 
                 i++;
                 setTimeout(typeEffect, randomDelay + extraDelay);
                 
                 subtitleElement.style.animation = 'none';
                 setTimeout(() => {
-                    subtitleElement.style.animation = 'subtitleGlow 4s infinite';
+                    subtitleElement.style.animation = 'subtleTextGlow 4s infinite';
                 }, 10);
             } else {
-                subtitleElement.style.transform = 'scale(1.1)';
+                subtitleElement.style.transform = 'scale(1.03)';
                 setTimeout(() => {
-                    subtitleElement.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    subtitleElement.style.transition = 'transform 0.5s ease';
                     subtitleElement.style.transform = 'scale(1)';
                 }, 200);
             }
         };
-
+    
         setTimeout(typeEffect, 1000);
     }
     
@@ -458,16 +489,16 @@ document.addEventListener('DOMContentLoaded', function() {
             konamiPosition++;
     
             if (konamiPosition === konamiCode.length) {
-                document.body.style.background = 'linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet)';
+                document.body.style.background = 'linear-gradient(135deg, #fff, #f0f0f0, #e0e0e0, #ffffff)';
                 document.body.style.backgroundSize = '400% 400%';
-                document.body.style.animation = 'enhancedGradientAnimation 5s ease infinite';
+                document.body.style.animation = 'subtlePulse 8s ease infinite';
     
-                showNotification('How do you still remember that?');
+                showNotification('Some memories transcend time and space.');
     
                 konamiPosition = 0;
             }
         } else {
-            konamiPosition = konamiCode.indexOf(e.key) === -1 ? 0 : konamiPosition;
+            konamiPosition = konamiCode.indexOf(e.key) === 0 ? 1 : 0;
         }
     });
     
@@ -485,48 +516,106 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     document.addEventListener('click', function(e) {
-        const numSparkles = Math.floor(Math.random() * 10) + 5;
-    
-        for (let i = 0; i < numSparkles; i++) {
-            const sparkle = document.createElement('div');
-            sparkle.style.position = 'absolute';
-            sparkle.style.width = `${Math.random() * 10 + 3}px`;
-            sparkle.style.height = `${Math.random() * 10 + 3}px`;
-            sparkle.style.borderRadius = '50%';
-            sparkle.style.backgroundColor = getRandomColor();
-            sparkle.style.left = `${e.clientX}px`;
-            sparkle.style.top = `${e.clientY}px`;
-            sparkle.style.pointerEvents = 'none';
-            sparkle.style.zIndex = '1000';
-            sparkle.style.boxShadow = `0 0 ${Math.random() * 10 + 5}px ${getRandomColor()}`;
-            document.body.appendChild(sparkle);
-    
-            const animationDuration = Math.random() * 1000 + 500;
-            const animationDistance = Math.random() * 100 + 50;
-            const angle = Math.random() * Math.PI * 2;
-    
-            sparkle.animate([
-                { 
-                    transform: 'scale(1) translate(0, 0)',
-                    opacity: 1
-                },
-                { 
-                    transform: `scale(${Math.random() * 2 + 1}) translate(${Math.cos(angle) * animationDistance}px, ${Math.sin(angle) * animationDistance}px)`,
-                    opacity: 0
-                }
-            ], {
-                duration: animationDuration,
-                easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-            });
-    
-            setTimeout(() => {
-                document.body.removeChild(sparkle);
-            }, animationDuration);
-        }
+        createLiminalClickEffect(e.clientX, e.clientY);
     });
     
-    function getRandomColor() {
-        const colors = ['#ff9933', '#ff5e62', '#8a2be2', '#ff6b6b', '#ffffff'];
-        return colors[Math.floor(Math.random() * colors.length)];
+    function createLiminalClickEffect(x, y) {
+        const burstContainer = document.createElement('div');
+        burstContainer.style.position = 'fixed';
+        burstContainer.style.left = x + 'px';
+        burstContainer.style.top = y + 'px';
+        burstContainer.style.pointerEvents = 'none';
+        burstContainer.style.zIndex = '9999';
+        document.body.appendChild(burstContainer);
+        
+        const numParticles = Math.floor(Math.random() * 10) + 5; // Fewer particles for subtlety
+        
+        for (let i = 0; i < numParticles; i++) {
+            createLiminalParticle(burstContainer);
+        }
+        
+        createLiminalRippleEffect(x, y);
+        
+        setTimeout(() => {
+            if (document.body.contains(burstContainer)) {
+                document.body.removeChild(burstContainer);
+            }
+        }, 1500);
+    }
+    
+    function createLiminalParticle(container) {
+        const particle = document.createElement('div');
+        
+        const size = Math.random() * 8 + 2; // Smaller particles
+        const duration = Math.random() * 800 + 400;
+        const distance = Math.random() * 60 + 20; // Shorter distance
+        const angle = Math.random() * Math.PI * 2;
+        const delay = Math.random() * 100;
+        
+        const brightness = Math.floor(Math.random() * 30); // Very dark
+        const color = `rgba(${brightness}, ${brightness}, ${brightness}, 0.7)`;
+        
+        particle.style.position = 'absolute';
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.backgroundColor = color;
+        particle.style.borderRadius = '50%'; // All circular
+        particle.style.boxShadow = `0 0 ${Math.random() * 4 + 1}px rgba(0, 0, 0, 0.5)`; // Subtle shadow
+        particle.style.transform = 'translate(-50%, -50%) scale(0)';
+        particle.style.opacity = '0';
+        
+        container.appendChild(particle);
+        
+        setTimeout(() => {
+            particle.style.transition = `transform ${duration}ms ease-out, opacity ${duration}ms ease-out`;
+            particle.style.transform = `translate(
+                ${Math.cos(angle) * distance}px, 
+                ${Math.sin(angle) * distance}px
+            ) scale(${Math.random() * 0.4 + 0.2})`; // Smaller scale
+            particle.style.opacity = '0.7';
+            
+            setTimeout(() => {
+                particle.style.opacity = '0';
+            }, duration * 0.6);
+        }, delay);
+    }
+    
+    function createLiminalRippleEffect(x, y) {
+        const ripple = document.createElement('div');
+        ripple.style.position = 'fixed';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.width = '8px';
+        ripple.style.height = '8px';
+        ripple.style.borderRadius = '50%';
+        ripple.style.border = '2px solid rgba(0, 0, 0, 0.4)'; // Black border
+        ripple.style.transform = 'translate(-50%, -50%)';
+        ripple.style.pointerEvents = 'none';
+        ripple.style.zIndex = '9999';
+        document.body.appendChild(ripple);
+        
+        ripple.animate([
+            { 
+                width: '8px', 
+                height: '8px', 
+                opacity: 0.5,
+                borderWidth: '2px'
+            },
+            { 
+                width: '100px', 
+                height: '100px', 
+                opacity: 0,
+                borderWidth: '1px'
+            }
+        ], {
+            duration: 600,
+            easing: 'ease-out'
+        });
+        
+        setTimeout(() => {
+            if (document.body.contains(ripple)) {
+                document.body.removeChild(ripple);
+            }
+        }, 600);
     }
 });
