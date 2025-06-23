@@ -33,6 +33,59 @@ document.addEventListener('DOMContentLoaded', function() {
     const notificationQueue = [];
     let activeNotification = null;
 
+    const quoteText = document.getElementById('quote-text');
+    const quoteAuthor = document.getElementById('quote-author');
+    const quoteScreen = document.getElementById('quote-screen');
+    const mainSite = document.getElementById('main-site');
+    const progressBar = document.querySelector('.progress-bar');
+
+    const quotes = [
+    "This page remembers what most forget.",
+    "You’re here because you noticed the silence.",
+    "Not every story starts with a bang.",
+    "Look sideways. Find the cracks.",
+    "The real detail lives in small things.",
+    "This isn’t noise. It’s a signal.",
+    "You don’t need permission to understand.",
+    "What’s unseen shapes what’s next.",
+    "You stepped in before the world caught up."
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+    function animateQuote(text, callback) {
+        const chars = text.split('');
+        quoteText.innerHTML = '';
+
+        chars.forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char === ' ' ? '\u00A0' : char;
+            quoteText.appendChild(span);
+
+            setTimeout(() => {
+                span.classList.add('visible');
+            }, index * 50);
+        });
+
+        progressBar.style.transition = `width ${chars.length * 50}ms ease-out`;
+        progressBar.style.width = `100%`;
+
+        setTimeout(() => {
+            if (callback) callback();
+        }, chars.length * 50 + 300);
+    }
+
+    let quoteFinished = false;
+    const quoteInstruction = document.querySelector('.quote-instruction');
+    quoteInstruction.style.opacity = '0';
+
+    animateQuote(randomQuote, () => {
+        quoteAuthor.style.opacity = '1';
+        quoteInstruction.style.opacity = '1';
+        quoteInstruction.style.animation = 'pulseInstruction 2s ease-in-out';
+        quoteFinished = true;
+    });
+
     function showNotification(message, duration = 5000) {
         const notification = {
             message: message,
@@ -207,7 +260,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const bgMusic = document.getElementById('bgMusic');
     let musicStarted = false;
     
-    document.addEventListener('click', function() {
+    document.addEventListener('click', function handleClick() {
+        if (!quoteFinished) return;
+
+        document.removeEventListener('click', handleClick);
+
+        quoteScreen.classList.remove('active');
+        quoteScreen.classList.add('hidden');
+        mainSite.classList.remove('hidden');
+
         if (!musicStarted && bgMusic) {
             bgMusic.volume = 0.3;
             bgMusic.play().then(() => {
@@ -220,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     bgMusic.volume = currentVolume;
                 }, 1000);
-                
+
                 showNotification('entering liminal space');
                 musicStarted = true;
             }).catch(e => {
@@ -228,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showNotification('Tap again to enable sound');
             });
         }
-    }, { once: true });
+    });
 
     const navLinks = document.querySelectorAll('.nav-menu a[data-section]');
     const sections = document.querySelectorAll('section');
